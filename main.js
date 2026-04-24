@@ -1,6 +1,4 @@
-// Base configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
+// No API keys in frontend — all requests go through backend proxy
 
 // DOM Elements
 const promptInput = document.getElementById('prompt-input');
@@ -253,9 +251,8 @@ async function processQueue() {
             formData.append('file', nextTask.file);
             formData.append('user', userId);
 
-            const uploadRes = await fetch(`${API_BASE_URL}/files/upload`, {
+            const uploadRes = await fetch('/api/upload', {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${API_KEY}` },
                 body: formData
             });
 
@@ -285,10 +282,9 @@ async function processQueue() {
             });
         }
 
-        const chatRes = await fetch(`${API_BASE_URL}/chat-messages`, {
+        const chatRes = await fetch('/api/chat', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)

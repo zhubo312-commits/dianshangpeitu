@@ -1,8 +1,13 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/peitu/',
   server: {
-    port: 5180
+    port: 5180,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3088',
+        changeOrigin: true
+      }
+    }
   }
 })
