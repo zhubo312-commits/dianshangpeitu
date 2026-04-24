@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电商配图助手专用</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+
+  <div class="app-container">
+    <header class="app-header">
+      <h1>电商配图助手专用</h1>
+      <p class="header-desc">上传产品图，一键生成绝美国风宣传海报！无需专业设计师，瞬间拉满商品视觉高级感，零门槛搞定爆款配图！</p>
+    </header>
+
+    <div class="main-layout">
+      <!-- Left Panel: Input Controls -->
+      <aside class="left-panel">
+        <div class="panel-title">
+          <span class="material-icons">edit</span>
+          输入设置
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">请上传商品图：</label>
+          <label for="file-upload" class="upload-area" id="upload-area">
+            <div class="upload-placeholder" id="upload-placeholder">
+              <span class="material-icons">add_photo_alternate</span>
+              <span>点击、拖拽或粘贴图片</span>
+              <span class="upload-hint">支持 PNG / JPG / WEBP / GIF</span>
+            </div>
+            <div class="drag-overlay hidden" id="drag-overlay">
+              <span class="material-icons">file_download</span>
+              <span>松手放下图片</span>
+            </div>
+            <div id="image-preview-container" class="image-preview-container hidden">
+              <img id="image-preview" src="" alt="preview"/>
+            </div>
+          </label>
+          <input type="file" id="file-upload" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif" style="display: none;" />
+          <button id="remove-image-btn" class="remove-image-btn hidden">
+            <span class="material-icons">delete_outline</span> 移除图片
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">请说明您的需求：</label>
+          <textarea id="prompt-input" class="prompt-textarea" placeholder="描述你想要生成的图片内容..." rows="4"></textarea>
+        </div>
+
+        <button id="send-button" class="generate-btn">
+          <span class="material-icons">auto_awesome</span>
+          生成一张图
+        </button>
+      </aside>
+
+      <!-- Middle Panel: Task Queue -->
+      <section class="queue-panel">
+        <div class="panel-title">
+          <span class="material-icons">queue</span>
+          任务队列
+          <span class="queue-count" id="queue-count"></span>
+        </div>
+        <div class="queue-list" id="queue-list">
+          <div class="queue-empty" id="queue-empty">
+            <span class="material-icons">inbox</span>
+            <span>暂无任务</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Preview Area -->
+      <main class="right-panel">
+        <div class="panel-title">
+          <span class="material-icons">image</span>
+          生成预览
+        </div>
+
+        <div class="preview-area" id="preview-area">
+          <!-- Empty State -->
+          <div class="empty-state" id="empty-state">
+            <span class="material-icons empty-icon">palette</span>
+            <p class="empty-title">等待生成...</p>
+            <p class="empty-subtitle">上传商品图并输入需求，点击"生成一张图"开始</p>
+          </div>
+
+          <!-- Loading State -->
+          <div class="loading-state hidden" id="loading-state">
+            <div class="loader-ring">
+              <div></div><div></div><div></div><div></div>
+            </div>
+            <p class="loading-text">AI 正在努力绘制中...</p>
+          </div>
+
+          <!-- Queued State -->
+          <div class="queued-state hidden" id="queued-state">
+            <span class="material-icons queued-icon">schedule</span>
+            <p class="queued-title">排队等待中...</p>
+            <p class="queued-subtitle">前方还有任务正在生成，请稍候</p>
+          </div>
+
+          <!-- Result State -->
+          <div class="result-state hidden" id="result-state">
+            <img id="result-image" class="result-image" src="" alt="generated" />
+            <div class="result-actions">
+              <button id="download-btn" class="download-btn">
+                <span class="material-icons">download</span> 下载图片
+              </button>
+            </div>
+            <div class="result-text" id="result-text"></div>
+          </div>
+
+          <!-- Error State -->
+          <div class="error-state hidden" id="error-state">
+            <span class="material-icons error-icon">error_outline</span>
+            <p class="error-title">生成失败</p>
+            <p class="error-message" id="error-message"></p>
+          </div>
+        </div>
+
+        <!-- Task Detail (always visible at bottom when a task is selected) -->
+        <div class="task-detail hidden" id="task-detail">
+          <div class="detail-row">
+            <span class="detail-label">提示词：</span>
+            <span class="detail-value" id="detail-query"></span>
+          </div>
+          <div class="detail-row" id="detail-image-row">
+            <span class="detail-label">上传原图：</span>
+            <img class="detail-thumb" id="detail-thumb" src="" alt="original" />
+          </div>
+          <div class="detail-actions">
+            <button id="retry-btn" class="retry-btn">
+              <span class="material-icons">refresh</span> 重新生成
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

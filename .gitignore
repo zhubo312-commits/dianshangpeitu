@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.*
+nginx_remote.conf
+nginx_updated.conf
+电商配图助手.zip
